@@ -63,6 +63,8 @@ func main() {
 				kb.AddKey(keyboardMapping_SPACE)
 			case "RETURN":
 				kb.AddKey(keyboardMapping_RETURN)
+			case "DELETE":
+				kb.AddKey(keyboardMapping_DELETE)
 			default:
 				kb.AddKey(keyboardMapping[mappings[uid][0]])
 			}
