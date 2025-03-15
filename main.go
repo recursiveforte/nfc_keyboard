@@ -39,17 +39,14 @@ func main() {
 		fmt.Println("enter key: ")
 		_, err = fmt.Scanln(&key)
 		if err != nil {
-			if err.Error() == "unexpected newline" {
-				fmt.Println("saving!")
-				cleanup()
-				return
-			} else {
-				panic(err)
-			}
+			panic(err)
 		}
 
 		uid := binary.LittleEndian.Uint32(c.UID())
 		mappings[key] = uid
 		fmt.Printf("%s: %x\n", key, uid)
+		cleanup()
+		fmt.Println("saved!")
+		return
 	})
 }
