@@ -34,6 +34,8 @@ func main() {
 		os.WriteFile(fileName, json, 0644)
 	}
 
+	hasShift := false
+
 	ctx.ServeFunc(func(c acr122u.Card) {
 		var key string
 
@@ -47,14 +49,31 @@ func main() {
 
 			switch mappings[uid] {
 			case "SHIFT":
-				kb.AddKey(keyboardMapping_SHIFT)
+				hasShift = !hasShift
+				hasShiftText := "0"
+				if hasShift {
+					hasShiftText = "1"
+				}
+				err := os.WriteFile("hasShift", []byte(hasShiftText), 0644)
+				if err != nil {
+					panic(err)
+				}
+				return
 			case "SPACE":
 				kb.AddKey(keyboardMapping_SPACE)
 			default:
 				kb.AddKey(keyboardMapping[mappings[uid][0]])
 			}
 
-			fmt.Println(keyboardMapping[mappings[uid][0]])
+			if hasShift {
+				kb.HasSHIFT(true)
+				err := os.WriteFile("hasShift", []byte("0"), 0644)
+				if err != nil {
+					panic(err)
+				}
+				hasShift = false
+			}
+
 			err = kb.Launching()
 			if err != nil {
 				panic(err)
