@@ -41,3 +41,4 @@ var keyboardMapping = map[uint8]int{
 
 var keyboardMapping_SPACE = 0x31
 var keyboardMapping_SHIFT = 0x38
+var keyboardMapping_RETURN = 0x24
